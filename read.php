@@ -3,8 +3,8 @@ include("load.php");
 ?>
 <html>
 <head>
-	<link rel="stylesheet" href="/bootstrap.min.css" integrity="sha384-9gVQ4dYFwwWSjIDZnLEWnxCjeSWFphJiwGPXr1jddIhOegiu1FwO5qRGvFXOdJZ4" crossorigin="anonymous">
-	<title><?=$_GET['s']?> <?php if($cor) { echo "- Page " . $_GET['p']; }?></title>
+	<link rel="stylesheet" href="<?=$base?>bootstrap.min.css" integrity="sha384-9gVQ4dYFwwWSjIDZnLEWnxCjeSWFphJiwGPXr1jddIhOegiu1FwO5qRGvFXOdJZ4" crossorigin="anonymous">
+	<title><?=$_GET['s']?> <?php if($next) { echo "- Page " . $_GET['p']; }?></title>
 	<style type="text/css">
 		body {
 			background-color: #E9ECEF;
@@ -71,7 +71,7 @@ include("load.php");
 				}).fadeIn(400);
 				
 				document.title = "Select a story";
-				history.pushState(null, null, "/read/");
+				history.pushState(null, null, "<?=$base?>read/");
 				$(".title-header").html("Select a story");
 				hideDirections();
 			}
@@ -89,7 +89,7 @@ include("load.php");
 				}).fadeIn(400);
 				
 				document.title = story;
-				history.pushState(null, null, "/read/" + story);
+				history.pushState(null, null, "<?=$base?>read/" + story);
 				$(".title-header").html(story);
 				hideDirections();
 			}
@@ -107,7 +107,7 @@ include("load.php");
 				}).fadeIn(400);
 				
 				document.title = story + " - Page " + chapter;
-				history.pushState(null, null, "/read/" + story + "/" + chapter);
+				history.pushState(null, null, "<?=$base?>read/" + story + "/" + chapter);
 				$(".title-header").html(story);
 				showDirections(story, chapter);
 			}
@@ -133,7 +133,7 @@ include("load.php");
 				}).fadeIn(400);
 				
 				document.title = s + " - Page " + p;
-				history.pushState(null, null, "/read/" + s + "/" + p);
+				history.pushState(null, null, "<?=$base?>read/" + s + "/" + p);
 				$(".title-header").html(s);
 				showDirections(s, p);
 				window.scrollTo(0,0);
@@ -161,7 +161,7 @@ include("load.php");
 				}).fadeIn(400);
 				
 				document.title = s + " - Page " + p;
-				history.pushState(null, null, "/read/" + s + "/" + p);
+				history.pushState(null, null, "<?=$base?>read/" + s + "/" + p);
 				$(".title-header").html(s);
 				showDirections(s, p);
 				window.scrollTo(0,0);

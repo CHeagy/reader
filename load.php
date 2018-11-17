@@ -1,7 +1,7 @@
 <?php
-$base = "http://localhost/";
+$base = "http://localhost/story-reader/";
 
-$dsn = 'mysql:host=localhost;dbname=database';
+$dsn = 'mysql:host=localhost;dbname=reader-database';
 $db = new PDO($dsn, 'username', 'password');
 
 if(!isset($_GET['s'])) {
@@ -65,7 +65,7 @@ if(!isset($_GET['s'])) {
 
 	if($r['text'] == "") {
 		//header("Location: read.php?s=" . $_GET['s']);
-		echo '<script>window.location.replace("/read/' . $_GET['s'] . '");</script>';
+		echo '<script>window.location.replace("' . $base . 'read/' . $_GET['s'] . '");</script>';
 	} else {
 		$next = $base . "read/" . $_GET['s'] . "/" . ($_GET['p']+1);
 	}
