@@ -1,0 +1,8 @@
+RewriteEngine on
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteRule ^read$ read.php
+RewriteRule ^read/$ read.php
+RewriteRule ^read/([\w\s]+)$ read.php?s=$1
+RewriteRule ^read/([\w\s]+)/$ read.php?s=$1
+RewriteRule ^read/([\w\s]+)/(\d+) read.php?s=$1&p=$2
