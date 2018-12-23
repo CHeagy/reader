@@ -1,8 +1,8 @@
 <?php
-$base = "http://read.local/";
+require('config.php');
 
-$dsn = 'mysql:host=localhost;dbname=reader';
-$db = new PDO($dsn, 'username', 'password');
+$dsn = 'mysql:host=' . $hostname . ';dbname=' . $database;
+$db = new PDO($dsn, $username, $password);
 
 if(!isset($_GET['s'])) {
 	$r['text'] = "You need to select a story.<br />";
