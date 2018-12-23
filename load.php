@@ -1,7 +1,7 @@
 <?php
-$base = "http://localhost/story-reader/";
+$base = "http://read.local/";
 
-$dsn = 'mysql:host=localhost;dbname=reader-database';
+$dsn = 'mysql:host=localhost;dbname=reader';
 $db = new PDO($dsn, 'username', 'password');
 
 if(!isset($_GET['s'])) {
