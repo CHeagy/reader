@@ -9,6 +9,9 @@ include("load.php");
 		body {
 			background-color: #E9ECEF;
 		}
+		span.wwnot {
+			font-size: 0.7rem;
+		}
 
 		.hide {
 			display: none;
@@ -28,6 +31,7 @@ include("load.php");
 				</div>
 				<div class="col-6 col-sm-6 text-center">
 					<h2 class="title-header"><?php echo $_GET['s']; ?></h2>
+					<span class="wwnot">All of these stories have been ripped from <a href="https://www.wuxiaworld.com/" target="_blank">WuxiaWorld</a> purely for my own ease of reading.</span><br />
 				</div>
 				<div class="col-3 col-sm-3 text-right">
 					<a class="nav-link next-link <?php if(!$next) { ?>hide<?php } ?>" style="font-size: 1.2rem;" href="<?=$next?>">Next Page >></a>
@@ -46,6 +50,7 @@ include("load.php");
 				</div>
 				<div class="col-6 col-sm-6 text-center">
 					<h2 class="title-header"><?php echo $_GET['s']; ?></h2>
+					<span class="wwnot">All of these stories have been ripped from <a href="https://www.wuxiaworld.com/" target="_blank">WuxiaWorld</a> purely for my own ease of reading.</span>
 				</div>
 				<div class="col-3 col-sm-3 text-right">
 					<a class="nav-link next-link <?php if(!$next) { ?>hide<?php } ?>" style="font-size: 1.2rem;" href="<?=$next?>">Next Page >></a>
