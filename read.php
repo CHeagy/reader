@@ -58,6 +58,7 @@ include("load.php");
 <script type="text/javascript">
 	function loadList(back = false) {
 		$.get("<?=$base?>load.php?a=true", function(data, status) {
+			//alert(data + " - " + status);
 			if(status == "success") {
 				s = true;
 				$("#main-body").fadeOut(400, function() {
@@ -81,6 +82,7 @@ include("load.php");
 
 	function loadStoryList(story, back = false) {
 		$.get("<?=$base?>load.php?a=true&s=" + story, function(data, status) {
+			//alert(data + " - " + status);
 			if(status == "success") {
 				s = true;
 				$("#main-body").fadeOut(400, function() {
@@ -105,6 +107,7 @@ include("load.php");
 
 	function loadMe(story, chapter, back = false) {
 		$.get("<?=$base?>load.php?a=true&s=" + story + "&p=" + chapter, function(data, status) {
+			//alert(data + " - " + status);
 			if(status == "success") {
 				s = true;
 				$("#main-body").fadeOut(400, function() {
@@ -137,6 +140,7 @@ include("load.php");
 		p = (p+1);
 
 		$.get("<?=$base?>load.php?a=true&s=" + s + "&p=" + p, function(data, status) {
+			//alert(data + " - " + status);
 			if(status == "success") {
 				$("#main-body").fadeOut(400, function() {
 					$("#main-body").html(data);
@@ -164,6 +168,7 @@ include("load.php");
 		p = (p-1);
 
 		$.get("<?=$base?>load.php?a=true&s=" + s + "&p=" + p, function(data, status) {
+			//alert(data + " - " + status);
 			if(status == "success") {
 				$("#main-body").fadeOut(400, function() {
 					$("#main-body").html(data);
@@ -198,10 +203,13 @@ include("load.php");
 	}
 
 	window.onpopstate = function(event) {
+		//alert("location: " + document.location + ", state: " + JSON.stringify(event.state));
+
 		page = /\/read\/([a-zA-Z\%20]+)\/([\d]+)/gm;
 		story = /\/read\/([a-zA-Z\%20]+)/gm;
-		list = /\/read\/?/gm;
+		list = /\/read\//gm;
 		newloc = String(document.location);
+		console.log(newloc);
 		let r;
 
 		if(page.test(newloc)) {
@@ -209,15 +217,19 @@ include("load.php");
 			r = page.exec(newloc);
 			r[1] = r[1].replace(/([\%20])+/gm, " ");
 			loadMe(r[1], r[2], true);
+			console.log("loadMe(" + r[1] + ", " + r[2] + ")");
 		} else if(story.test(newloc)) {
 			story.exec("");
 			r = story.exec(newloc);
 			r[1] = r[1].replace(/([\%20])+/gm, " ");
 			loadStoryList(r[1], true);
+			console.log("loadStoryList(" + r[1] + ")");
 		} else if(list.test(newloc)) {
 			loadList(true);
+			console.log("loadList()");
 		} else {
-			history.back();
+			back();
+			console.log("back()");
 		}
 	};
 </script>

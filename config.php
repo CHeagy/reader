@@ -7,7 +7,7 @@
 ## Import reader-database.sql
 ## Read on
 
-$base = "http://reader.test/";
+$base = "http://read.local/";
 
 $username = "username";
 $hostname = "localhost";
