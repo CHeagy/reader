@@ -3,7 +3,7 @@ include("load.php");
 ?>
 <html>
 <head>
-	<link rel="stylesheet" href="<?=$base?>bootstrap.min.css" integrity="sha384-9gVQ4dYFwwWSjIDZnLEWnxCjeSWFphJiwGPXr1jddIhOegiu1FwO5qRGvFXOdJZ4" crossorigin="anonymous">
+	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
 	<title><?=$_GET['s']?> <?php if($next) { echo "- Page " . $_GET['p']; }?></title>
 	<style type="text/css">
 		body {
@@ -61,7 +61,7 @@ include("load.php");
 </main>
 <script type="text/javascript" src="<?=$base?>jquery.min.js"></script>
 <script type="text/javascript">
-	function loadList() {
+	function loadList(back = false) {
 		$.get("<?=$base?>load.php?a=true", function(data, status) {
 			//alert(data + " - " + status);
 			if(status == "success") {
@@ -71,7 +71,13 @@ include("load.php");
 				}).fadeIn(400);
 				
 				document.title = "Select a story";
-				history.pushState(null, null, "<?=$base?>read/");
+				if(back) {
+					console.log("replace");
+					history.replaceState(null, null, "<?=$base?>read/");
+				} else {
+					console.log("push");
+					history.pushState(null, null, "<?=$base?>read/");
+				}
 				$(".title-header").html("Select a story");
 				hideDirections();
 			}
@@ -79,7 +85,7 @@ include("load.php");
 		return false;
 	}
 
-	function loadStoryList(story) {
+	function loadStoryList(story, back = false) {
 		$.get("<?=$base?>load.php?a=true&s=" + story, function(data, status) {
 			//alert(data + " - " + status);
 			if(status == "success") {
@@ -89,7 +95,14 @@ include("load.php");
 				}).fadeIn(400);
 				
 				document.title = story;
-				history.pushState(null, null, "<?=$base?>read/" + story);
+
+				if(back) {
+					console.log("replace");
+					history.replaceState(null, null, "<?=$base?>read/" + story);
+				} else {
+					console.log("push");
+					history.pushState(null, null, "<?=$base?>read/" + story);
+				}
 				$(".title-header").html(story);
 				hideDirections();
 			}
@@ -97,7 +110,7 @@ include("load.php");
 		return false;	
 	}
 
-	function loadMe(story, chapter) {
+	function loadMe(story, chapter, back = false) {
 		$.get("<?=$base?>load.php?a=true&s=" + story + "&p=" + chapter, function(data, status) {
 			//alert(data + " - " + status);
 			if(status == "success") {
@@ -107,7 +120,13 @@ include("load.php");
 				}).fadeIn(400);
 				
 				document.title = story + " - Page " + chapter;
-				history.pushState(null, null, "<?=$base?>read/" + story + "/" + chapter);
+				if(back) {
+					console.log("replace");
+					history.replaceState(null, null, "<?=$base?>read/" + story + "/" + chapter);
+				} else {
+					console.log("push");
+					history.pushState(null, null, "<?=$base?>read/" + story + "/" + chapter);
+				}
 				$(".title-header").html(story);
 				showDirections(story, chapter);
 			}
@@ -187,5 +206,36 @@ include("load.php");
 			$(".prev-link").addClass("hide");
 		}
 	}
+
+	window.onpopstate = function(event) {
+		//alert("location: " + document.location + ", state: " + JSON.stringify(event.state));
+
+		page = /\/read\/([a-zA-Z\%20]+)\/([\d]+)/gm;
+		story = /\/read\/([a-zA-Z\%20]+)/gm;
+		list = /\/read\//gm;
+		newloc = String(document.location);
+		console.log(newloc);
+		let r;
+
+		if(page.test(newloc)) {
+			page.exec("");
+			r = page.exec(newloc);
+			r[1] = r[1].replace(/([\%20])+/gm, " ");
+			loadMe(r[1], r[2], true);
+			console.log("loadMe(" + r[1] + ", " + r[2] + ")");
+		} else if(story.test(newloc)) {
+			story.exec("");
+			r = story.exec(newloc);
+			r[1] = r[1].replace(/([\%20])+/gm, " ");
+			loadStoryList(r[1], true);
+			console.log("loadStoryList(" + r[1] + ")");
+		} else if(list.test(newloc)) {
+			loadList(true);
+			console.log("loadList()");
+		} else {
+			back();
+			console.log("back()");
+		}
+	};
 </script>
 </body>
